@@ -1,12 +1,13 @@
 import React from "react";
 
 const AdBlockerPrompt = ({ onClose }) => (
-  <div style={{
+  <div className="adblocker-modal-box" style={{
     background: "#fff",
     borderRadius: 16,
-    padding: "40px 36px 32px 36px",
-    minWidth: 340,
+    padding: "32px 32px 24px 32px",
+    minWidth: 0,
     maxWidth: 420,
+    width: '100%',
     boxShadow: "0 4px 32px rgba(0,0,0,0.25)",
     textAlign: "center",
     zIndex: 20001,
@@ -14,6 +15,7 @@ const AdBlockerPrompt = ({ onClose }) => (
     flexDirection: 'column',
     alignItems: 'center',
     position: 'relative',
+    boxSizing: 'border-box',
   }}>
     {/* Close (X) button */}
     <button
@@ -41,6 +43,16 @@ const AdBlockerPrompt = ({ onClose }) => (
       Please disable your ad blocker to support this site.<br />
       You won't be able to use the website while an ad blocker is enabled.
     </div>
+    <style>{`
+      @media (max-width: 600px) {
+        .adblocker-modal-box {
+          padding: 16px 6px !important;
+          font-size: 15px !important;
+          min-width: 0 !important;
+          max-width: 95vw !important;
+        }
+      }
+    `}</style>
   </div>
 );
 
