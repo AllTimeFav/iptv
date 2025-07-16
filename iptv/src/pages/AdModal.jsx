@@ -15,13 +15,13 @@ const AdModal = ({ open, onClose }) => {
 
   return (
     <div style={{
-      position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh",
-      background: "rgba(0,0,0,0.6)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 10000
+      position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)",
+      zIndex: 10000
     }}>
       <div style={{
         background: "#fff", borderRadius: 12, padding: 24, minWidth: 350, maxWidth: 400, boxShadow: "0 2px 24px rgba(0,0,0,0.2)", position: "relative"
       }}>
-        <div style={{ fontWeight: "bold", fontSize: 20, marginBottom: 8, color: "#1abc9c" }}>✨ Quick Break!</div>
+        <div style={{ fontWeight: "bold", fontSize: 20, marginBottom: 8, color: "#1abc9c" }}>Quick Break!</div>
         <div style={{ marginBottom: 16 }}>
           If you find this helpful, feel free to support us by exploring our sponsors.
         </div>
