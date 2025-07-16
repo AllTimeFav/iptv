@@ -29,6 +29,12 @@ const IPTVGenerator = () => {
       script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9700554883020818";
       script.async = true;
       script.crossOrigin = "anonymous";
+      script.onload = () => {
+        console.log('AdSense script loaded successfully');
+      };
+      script.onerror = () => {
+        console.log('Failed to load AdSense script');
+      };
       document.body.appendChild(script);
     }
   }, []);
@@ -188,11 +194,23 @@ const IPTVGenerator = () => {
                 >
                   {copied === fieldSteps[step - 1].key ? '✓' : '⎘'}
                 </button>
-                {/* Show ad only for the current field if needed */}
-                {fieldSteps[step - 1].key === 'server' && showUrlAd && !showAdModal && <InContentAd slot="7640162739" />}
-                {fieldSteps[step - 1].key === 'username' && showUsernameAd && !showAdModal && <InContentAd slot="7640162739" />}
-                {fieldSteps[step - 1].key === 'expiry' && showExpiryAd && !showAdModal && <InContentAd slot="7640162739" />}
               </div>
+              {/* Show ad below the current field, not inside it */}
+              {fieldSteps[step - 1].key === 'server' && showUrlAd && !showAdModal && (
+                <div className="ad-section">
+                  <InContentAd slot="7640162739" />
+                </div>
+              )}
+              {fieldSteps[step - 1].key === 'username' && showUsernameAd && !showAdModal && (
+                <div className="ad-section">
+                  <InContentAd slot="7640162739" />
+                </div>
+              )}
+              {fieldSteps[step - 1].key === 'expiry' && showExpiryAd && !showAdModal && (
+                <div className="ad-section">
+                  <InContentAd slot="7640162739" />
+                </div>
+              )}
             </>
           )}
           {step === 6 && (
