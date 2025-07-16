@@ -1,0 +1,247 @@
+/* Main Container */
+#iptv-generator {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 25px;
+    background: #02010C;
+    border-radius: 8px;
+    color: white;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+/* Header Styles */
+#iptv-generator h1 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 10px;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#iptv-generator h2 {
+    text-align: center;
+    color: #ccc;
+    margin-bottom: 25px;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+/* Field Rows */
+.field-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.field-row label {
+    min-width: 120px;
+    font-weight: bold;
+    color: #ccc;
+}
+
+/* Input Groups */
+.input-copy-group {
+    display: flex;
+    flex-grow: 1;
+}
+
+.input-copy-group input {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border: 1px solid #444;
+    border-radius: 4px 0 0 4px;
+    background: #111;
+    color: white;
+    border-right: none;
+    font-size: 14px;
+}
+
+/* Copy Button */
+.copy-btn {
+    background: #2c3e50;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 0 4px 4px 0;
+    padding: 0 15px;
+    cursor: pointer;
+    min-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.copy-btn:hover {
+    background: #3498db;
+}
+
+.copy-btn.copied {
+    background: #2ecc71;
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin: 25px 0;
+}
+
+/* Unified Button Styles */
+.generate-btn,
+.copy-all-btn,
+.check-btn,
+.done-btn {
+    width: 220px;
+    padding: 14px 0;
+    border: none;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+}
+
+/* Button Colors */
+.copy-all-btn {
+    background: #2ecc71;
+    color: white;
+}
+
+.generate-btn {
+    background: #3498db;
+    color: white;
+}
+
+.check-btn {
+    background: #f39c12;
+    color: white;
+}
+
+.done-btn {
+    background: #e74c3c;
+    color: white;
+    font-size: 12px !important;
+}
+
+/* Button Hover States */
+.copy-all-btn:hover {
+    background: #27ae60;
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+}
+
+.generate-btn:hover {
+    background: #2980b9;
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+}
+
+.check-btn:hover {
+    background: #e67e22;
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+    
+}
+
+.done-btn:hover {
+    background: #c0392b;
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+}
+
+/* Button Active States */
+.copy-all-btn:active,
+.generate-btn:active,
+.check-btn:active,
+.done-btn:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+/* Server Check Results */
+#check-result {
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 5px;
+    background: rgba(46, 204, 113, 0.1);
+    border-left: 4px solid #2ecc71;
+    color: #fff;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+#check-result strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Branding Footer */
+.branding {
+    text-align: center;
+    margin-top: 30px;
+    color: #777;
+    font-size: 12px;
+    padding-top: 15px;
+    border-top: 1px solid #333;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 480px) {
+    #iptv-generator {
+        padding: 20px;
+    }
+    
+    .field-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .field-row label {
+        margin-bottom: 8px;
+        width: 100%;
+    }
+    
+    .input-copy-group {
+        width: 100%;
+    }
+    
+    .button-container {
+        margin: 20px 0;
+    }
+    
+    .generate-btn,
+    .copy-all-btn,
+    .check-btn,
+    .done-btn {
+        width: 100%;
+        max-width: 220px;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+#sticky-ad-container {
+    animation: fadeInUp 0.3s ease-out;
+}
+.in-content-ad {
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

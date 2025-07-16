@@ -1,0 +1,212 @@
+.xtream-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.xtream-container h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.progress-steps::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #ddd;
+  z-index: 1;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.step-number {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #ddd;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.step-label {
+  font-size: 12px;
+  color: #7f8c8d;
+}
+
+.step.active .step-number {
+  background: #3498db;
+}
+
+.step.current .step-number {
+  background: #2c3e50;
+  transform: scale(1.1);
+}
+
+.step.active .step-label {
+  color: #2c3e50;
+  font-weight: bold;
+}
+
+.content-area {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.connect-section {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.connect-section h2 {
+  color: #3498db;
+  margin-bottom: 10px;
+}
+
+.connect-btn {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 20px;
+}
+
+.connect-btn:hover {
+  background: #2980b9;
+}
+
+.connect-btn:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.field-row label {
+  width: 100px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.field-row input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.copy-btn {
+  background: #2ecc71;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.copy-btn:hover {
+  background: #27ae60;
+}
+
+.copy-btn.copied {
+  background: #3498db;
+}
+
+.complete-section {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.complete-section h3 {
+  color: #2ecc71;
+  margin-bottom: 20px;
+}
+
+.done-btn {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.done-btn:hover {
+  background: #2980b9;
+}
+
+.action-buttons {
+  text-align: right;
+}
+
+.next-btn {
+  background: #2c3e50;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.next-btn:hover {
+  background: #1a252f;
+}
+
+.in-content-ad {
+  margin: 25px 0;
+  text-align: center;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+#sticky-ad-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 9999;
+  background: #fff;
+  padding: 10px 0;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
