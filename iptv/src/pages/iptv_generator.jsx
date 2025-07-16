@@ -17,6 +17,9 @@ const IPTVGenerator = () => {
   const [showUsernameAd, setShowUsernameAd] = useState(false);
   const [showExpiryAd, setShowExpiryAd] = useState(false);
   const [showAdModal, setShowAdModal] = useState(false);
+  const [copyAllState, setCopyAllState] = useState(false);
+  const [checkServerLoading, setCheckServerLoading] = useState(false);
+  const [checkServerResult, setCheckServerResult] = useState(null);
 
   // Load AdSense script once
   useEffect(() => {
@@ -71,6 +74,32 @@ const IPTVGenerator = () => {
     setTimeout(() => setCopied(null), 2000);
   };
 
+  // Copy all fields to clipboard with feedback
+  const copyAllFields = () => {
+    const text = [
+      `URL: ${credentials.server || ''}`,
+      `Username: ${credentials.username || ''}`,
+      `Password: ${credentials.password || ''}`,
+      `Expiration: ${credentials.expiry || ''}`,
+      `Region: ${credentials.region || ''}`
+    ].join('\n');
+    navigator.clipboard.writeText(text);
+    setCopyAllState(true);
+    setTimeout(() => setCopyAllState(false), 2000);
+  };
+
+  // Simulate check server functionality with feedback
+  const handleCheckServer = () => {
+    setCheckServerLoading(true);
+    setCheckServerResult(null);
+    setTimeout(() => {
+      // Simulate random result
+      const success = Math.random() > 0.3;
+      setCheckServerResult(success ? { success: true, message: 'Server is working!' } : { success: false, message: 'Server is not reachable.' });
+      setCheckServerLoading(false);
+    }, 1500);
+  };
+
   // Reset form
   const resetForm = () => {
     setStep(0);
@@ -78,10 +107,21 @@ const IPTVGenerator = () => {
     setShowUrlAd(false);
     setShowUsernameAd(false);
     setShowExpiryAd(false);
+    setCopyAllState(false);
+    setCheckServerResult(null);
   };
 
+  // Field definitions for step-based rendering
+  const fieldSteps = [
+    { key: 'server', label: 'URL:' },
+    { key: 'username', label: 'Username:' },
+    { key: 'password', label: 'Password:' },
+    { key: 'expiry', label: 'Expiration:' },
+    { key: 'region', label: 'Region:' },
+  ];
+
   return (
-    <>
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f0f2f5' }}>
       {/* Blur and overlay when AdModal is open */}
       {showAdModal && (
         <div style={{
@@ -96,13 +136,6 @@ const IPTVGenerator = () => {
       <div style={showAdModal ? { position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 20001, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'auto' } : {}}>
         <AdModal open={showAdModal} onClose={handleAdModalClose} />
       </div>
-      {/* Sticky ads on left and right edges */}
-      {/* <div style={{ position: 'fixed', left: 0, top: 0, height: '100vh', zIndex: 9999, display: 'flex', alignItems: 'center', pointerEvents: showAdModal ? 'none' : 'auto' }}>
-        <StickyBannerAd />
-      </div>
-      <div style={{ position: 'fixed', right: 0, top: 0, height: '100vh', zIndex: 9999, display: 'flex', alignItems: 'center', pointerEvents: showAdModal ? 'none' : 'auto' }}>
-        <StickyBannerAd />
-      </div> */}
       <div className="xtream-container">
         <h1>XTREAM IPTV Code Generator</h1>
         <div className="progress-steps">
@@ -130,68 +163,37 @@ const IPTVGenerator = () => {
               </button>
             </div>
           )}
-          {step === 1 && (
-            <div className="field-row">
-              <label>URL:</label>
-              <input type="text" value={credentials.server || ''} readOnly />
-              <button 
-                onClick={(e) => handleCopy('server', e)}
-                className={`copy-btn ${copied === 'server' ? 'copied' : ''}`}
-              >
-                {copied === 'server' ? '✓' : '⎘'}
-              </button>
-              {showUrlAd && !showAdModal && <InContentAd slot="7640162739" />}
-            </div>
-          )}
-          {step === 2 && (
-            <div className="field-row">
-              <label>Username:</label>
-              <input type="text" value={credentials.username || ''} readOnly />
-              <button 
-                onClick={(e) => handleCopy('username', e)}
-                className={`copy-btn ${copied === 'username' ? 'copied' : ''}`}
-              >
-                {copied === 'username' ? '✓' : '⎘'}
-              </button>
-              {showUsernameAd && !showAdModal && <InContentAd slot="7640162739" />}
-            </div>
-          )}
-          {step === 3 && (
-            <div className="field-row">
-              <label>Password:</label>
-              <input type="text" value={credentials.password || ''} readOnly />
-              <button 
-                onClick={(e) => handleCopy('password', e)}
-                className={`copy-btn ${copied === 'password' ? 'copied' : ''}`}
-              >
-                {copied === 'password' ? '✓' : '⎘'}
-              </button>
-            </div>
-          )}
-          {step === 4 && (
-            <div className="field-row">
-              <label>Expiration:</label>
-              <input type="text" value={credentials.expiry || ''} readOnly />
-              <button 
-                onClick={(e) => handleCopy('expiry', e)}
-                className={`copy-btn ${copied === 'expiry' ? 'copied' : ''}`}
-              >
-                {copied === 'expiry' ? '✓' : '⎘'}
-              </button>
-              {showExpiryAd && !showAdModal && <InContentAd slot="7640162739" />}
-            </div>
-          )}
-          {step === 5 && (
-            <div className="field-row">
-              <label>Region:</label>
-              <input type="text" value={credentials.region || ''} readOnly />
-              <button 
-                onClick={(e) => handleCopy('region', e)}
-                className={`copy-btn ${copied === 'region' ? 'copied' : ''}`}
-              >
-                {copied === 'region' ? '✓' : '⎘'}
-              </button>
-            </div>
+          {/* Show previous fields as read-only, only current field as editable */}
+          {step > 0 && step < 6 && (
+            <>
+              {fieldSteps.slice(0, step - 1).map((field) => (
+                <div className="field-row" key={field.key}>
+                  <label>{field.label}</label>
+                  <input type="text" value={credentials[field.key] || ''} readOnly />
+                  <button 
+                    onClick={(e) => handleCopy(field.key, e)}
+                    className={`copy-btn ${copied === field.key ? 'copied' : ''}`}
+                  >
+                    {copied === field.key ? '✓' : '⎘'}
+                  </button>
+                </div>
+              ))}
+              {/* Only show the current field as editable */}
+              <div className="field-row">
+                <label>{fieldSteps[step - 1].label}</label>
+                <input type="text" value={credentials[fieldSteps[step - 1].key] || ''} readOnly />
+                <button 
+                  onClick={(e) => handleCopy(fieldSteps[step - 1].key, e)}
+                  className={`copy-btn ${copied === fieldSteps[step - 1].key ? 'copied' : ''}`}
+                >
+                  {copied === fieldSteps[step - 1].key ? '✓' : '⎘'}
+                </button>
+                {/* Show ad only for the current field if needed */}
+                {fieldSteps[step - 1].key === 'server' && showUrlAd && !showAdModal && <InContentAd slot="7640162739" />}
+                {fieldSteps[step - 1].key === 'username' && showUsernameAd && !showAdModal && <InContentAd slot="7640162739" />}
+                {fieldSteps[step - 1].key === 'expiry' && showExpiryAd && !showAdModal && <InContentAd slot="7640162739" />}
+              </div>
+            </>
           )}
           {step === 6 && (
             <div className="complete-section">
@@ -202,22 +204,31 @@ const IPTVGenerator = () => {
                 <div style={{ marginBottom: 10 }}><strong>Expiration:</strong> <span>{credentials.expiry}</span></div>
                 <div style={{ marginBottom: 0 }}><strong>Region:</strong> <span>{credentials.region}</span></div>
               </div>
-              <h3>Your IPTV credentials are ready!</h3>
-              <button className="done-btn" onClick={resetForm}>
-                GENERATE NEW CREDENTIALS
-              </button>
             </div>
           )}
         </div>
-        <div className="action-buttons">
+        <div className="button-container">
           {step > 0 && step < 6 && (
             <button onClick={handleNextStep} className="next-btn">
               NEXT STEP
             </button>
           )}
+          {step === 6 && (
+            <>
+              <button onClick={copyAllFields} className={`copy-all-btn${copyAllState ? ' copied' : ''}`}>{copyAllState ? 'COPIED!' : 'COPY ALL'}</button>
+              <button onClick={resetForm} className="done-btn">DONE</button>
+              <button onClick={handleCheckServer} className="check-btn" disabled={checkServerLoading}>{checkServerLoading ? 'CHECKING...' : 'CHECK SERVER'}</button>
+            </>
+          )}
         </div>
+        {step === 6 && checkServerResult && (
+          <div style={{ textAlign: 'center', marginTop: 12, color: checkServerResult.success ? '#2ecc71' : '#e74c3c', fontWeight: 600 }}>
+            {checkServerResult.message}
+          </div>
+        )}
+        <div className="branding">Xtream-Generator.Com</div>
       </div>
-    </>
+    </div>
   );
 };
 

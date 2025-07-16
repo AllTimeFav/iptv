@@ -59,7 +59,8 @@ export function showStickyBanner() {
          data-ad-client="${adConfig.adsense.clientId}"
          data-ad-slot="${adConfig.adsense.stickyBannerUnit}"
          data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
+         data-full-width-responsive="true"
+         data-adtest="on"></ins>
   `;
   
   document.body.appendChild(banner);
@@ -83,7 +84,8 @@ export function showInContentAd(element) {
          data-ad-client="${adConfig.adsense.clientId}"
          data-ad-slot="${adConfig.adsense.inContentUnit}"
          data-ad-format="fluid"
-         data-full-width-responsive="true"></ins>
+         data-full-width-responsive="true"
+         data-adtest="on"></ins>
   `;
   
   element.parentNode.insertBefore(adContainer, element.nextSibling);

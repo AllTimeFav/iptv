@@ -166,11 +166,17 @@
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  transition: all 0.3s;
+  margin-right: 10px;
+  transition: background 0.2s, transform 0.1s;
 }
 
 .done-btn:hover {
-  background: #2980b9;
+  background: #217dbb;
+  transform: translateY(2px);
+}
+.done-btn:active {
+  background: #18639b;
+  transform: translateY(4px);
 }
 
 .action-buttons {
@@ -209,6 +215,53 @@
   padding: 10px 0;
   box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
   text-align: center;
+}
+
+.copy-all-btn {
+  background: #2ecc71;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background 0.2s, transform 0.1s;
+}
+.copy-all-btn:hover {
+  background: #27ae60;
+  transform: translateY(2px);
+}
+.copy-all-btn:active {
+  background: #219150;
+  transform: translateY(4px);
+}
+
+.check-btn {
+  background: #f39c12;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.check-btn:hover {
+  background: #e67e22;
+  transform: translateY(2px);
+}
+.check-btn:active {
+  background: #b9770e;
+  transform: translateY(4px);
+}
+
+/* Feedback for copy all */
+.copy-all-btn.copied {
+  background: #2ecc71;
+  color: #fff;
+  box-shadow: 0 0 0 2px #27ae60;
+  outline: none;
 }
 
 @media (max-width: 900px) {

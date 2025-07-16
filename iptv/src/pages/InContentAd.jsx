@@ -20,6 +20,7 @@ const InContentAd = ({ slot }) => {
         data-ad-slot={slot}
         data-ad-format="fluid"
         data-full-width-responsive="true"
+        data-adtest="on"
         ref={adRef}
       ></ins>
     </div>

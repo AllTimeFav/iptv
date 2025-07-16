@@ -26,11 +26,20 @@ export function useAdBlocker() {
       document.body.removeChild(bait);
     }, 100);
 
+    // Network-based detection
+    const img = document.createElement("img");
+    img.src = "https://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDL09e1bBABGAEyCjII6w";
+    img.style.display = "none";
+    img.onload = () => {};
+    img.onerror = () => setAdBlocked(true);
+    document.body.appendChild(img);
+
     // Also check if adsbygoogle is defined after a delay
     setTimeout(() => {
       if (typeof window.adsbygoogle === "undefined") {
         setAdBlocked(true);
       }
+      document.body.removeChild(img);
     }, 1000);
   }, []);
 

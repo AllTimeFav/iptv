@@ -36,6 +36,7 @@ const AdModal = ({ open, onClose }) => {
             data-ad-slot="7640162739"
             data-ad-format="auto"
             data-full-width-responsive="true"
+            data-adtest="on"
             ref={adRef}
           ></ins>
         </div>
