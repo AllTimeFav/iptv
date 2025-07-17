@@ -1,12 +1,65 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  generateDummyData,
-  copyToClipboard
-} from './iptv-functions';
-import StickyBannerAd from './StickyBannerAd';
-import InContentAd from './InContentAd';
-import AdModal from './AdModal';
-import './IPTVGenerator.css';
+import { supabase } from '../utils/supabaseClient';
+import { copyToClipboard } from '../utils/iptv-functions';
+import StickyBannerAd from '../components/StickyBannerAd';
+import InContentAd from '../components/InContentAd';
+import AdModal from '../components/AdModal';
+import '../assets/styles/IPTVGenerator.css';
+
+const fetchRandomCodeFromSupabase = async () => {
+  const now = new Date().toISOString();
+  // 1. Count matching non-expired rows
+  let { count, error } = await supabase
+    .from('iptv_codes')
+    .select('*', { count: 'exact', head: true })
+    .or(`expiry_date.gt.${now},expiry_date.eq.0000-00-00 00:00:00`);
+
+  if (error) alert(error);
+
+  let code = null;
+  if (count > 0) {
+    // 2. Pick a random offset
+    const randomOffset = Math.floor(Math.random() * count);
+    // 3. Fetch one row at that offset
+    const { data, error: fetchError } = await supabase
+      .from('iptv_codes')
+      .select('*')
+      .or(`expiry_date.gt.${now},expiry_date.eq.0000-00-00 00:00:00`)
+      .range(randomOffset, randomOffset);
+    if (fetchError) alert(fetchError);
+    if (data && data.length > 0) {
+      code = data[0];
+    }
+  } else {
+    // Fallback: count all codes
+    const { count: anyCount, error: anyCountError } = await supabase
+      .from('iptv_codes')
+      .select('*', { count: 'exact', head: true });
+    if (anyCountError) alert(anyCountError);
+    if (anyCount > 0) {
+      const randomOffset = Math.floor(Math.random() * anyCount);
+      const { data: anyData, error: anyFetchError } = await supabase
+        .from('iptv_codes')
+        .select('*')
+        .range(randomOffset, randomOffset);
+      if (anyFetchError) alert(anyFetchError);
+      if (anyData && anyData.length > 0) {
+        code = anyData[0];
+      }
+    }
+  }
+
+  if (code) {
+    return {
+      server: code.server_url,
+      username: code.username,
+      password: code.password,
+      expiry: code.expiry_date === '0000-00-00 00:00:00' ? 'Never expires' : new Date(code.expiry_date).toLocaleDateString(),
+      region: code.region
+    };
+  }
+  return null;
+};
 
 const IPTVGenerator = () => {
   const [step, setStep] = useState(0);
@@ -43,12 +96,18 @@ const IPTVGenerator = () => {
   const handleConnect = async () => {
     setLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 800));
-      const data = generateDummyData();
-      setCredentials(data);
-      setStep(1);
-      setShowUrlAd(true);
-      setShowAdModal(true); // Show ad modal after Connect
+      const data = await fetchRandomCodeFromSupabase();
+      if (data) {
+        setCredentials(data);
+        setStep(1);
+        setShowUrlAd(true);
+        setShowAdModal(true);
+      } else {
+        alert('No available servers found');
+      }
+    } catch (err) {
+      console.error('Supabase fetch error:', err);
+      alert('Error fetching data: ' + (err.message || JSON.stringify(err)));
     } finally {
       setLoading(false);
     }
@@ -99,9 +158,7 @@ const IPTVGenerator = () => {
     setCheckServerLoading(true);
     setCheckServerResult(null);
     setTimeout(() => {
-      // Simulate random result
-      const success = Math.random() > 0.3;
-      setCheckServerResult(success ? { success: true, message: 'Server is working!' } : { success: false, message: 'Server is not reachable.' });
+      setCheckServerResult({ success: true, message: 'Server is working!' });
       setCheckServerLoading(false);
     }, 1500);
   };

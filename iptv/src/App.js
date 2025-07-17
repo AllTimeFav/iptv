@@ -1,7 +1,7 @@
-import './App.css';
+import './assets/styles/App.css';
 import IPTVGenerator from './pages/iptv_generator';
-import { useAdBlocker } from './pages/useAdBlocker';
-import AdBlockerPrompt from './pages/AdBlockerPrompt';
+import { useAdBlocker } from './hooks/useAdBlocker';
+import AdBlockerPrompt from './components/AdBlockerPrompt';
 import React, { useEffect } from 'react';
 
 function App() {
